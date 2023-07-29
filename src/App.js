@@ -7,6 +7,9 @@ function App() {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [titles, setTitles] = useState("");
+  const [openingTexts, setOpeningTexts] = useState("");
+  const [releaseDates, setReleaseDates] = useState("");
 
   const fetchMoviesHandler = useCallback(async () => {
     setIsLoading(true);
@@ -39,8 +42,48 @@ function App() {
     fetchMoviesHandler();
   }, [fetchMoviesHandler]);
 
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log("Title:", titles);
+    console.log("Opening Text:", openingTexts);
+    console.log("Release Date:", releaseDates);
+
+    setTitles("");
+    setOpeningTexts("");
+    setReleaseDates("");
+  };
+
   return (
     <React.Fragment>
+      <section>
+        <form onSubmit={submitHandler}>
+          <label htmlFor="title">Title</label>
+          <input
+            type="text"
+            name="title"
+            value={titles}
+            onChange={(e) => setTitles(e.target.value)}
+            className="title"
+          />
+          <label htmlFor="openingText">Opening Text</label>
+          <input
+            type="text"
+            name="openingText"
+            value={openingTexts}
+            onChange={(e) => setOpeningTexts(e.target.value)}
+            className="openingText"
+          />
+          <label htmlFor="releaseDate">Release Date</label>
+          <input
+            type="date"
+            name="releaseDate"
+            value={releaseDates}
+            onChange={(e) => setReleaseDates(e.target.value)}
+            className="releaseDate"
+          />
+          <button type="submit">Add Movie</button>
+        </form>
+      </section>
       <section>
         <button onClick={fetchMoviesHandler}>Fetch Movies</button>
       </section>
